@@ -1,0 +1,31 @@
+opscenter:
+  image: twentyfourseven/opscenter
+  ports:
+    - "8888:8888"
+
+cassandra_seed:
+  image: twentyfourseven/cassandra
+  ports:
+    - "9042:9042"
+  links:
+    - opscenter
+  environment:
+    - OPS_IP=opscenter
+
+cassandra_slave1:
+  image: twentyfourseven/cassandra
+  links:
+    - opscenter
+    - cassandra_seed
+  environment:
+    - OPS_IP=opscenter
+    - SEED=cassandra_seed
+
+cassandra_slave2:
+  image: twentyfourseven/cassandra
+  links:
+    - opscenter
+    - cassandra_seed
+  environment:
+    - OPS_IP=opscenter
+    - SEED=cassandra_seed
