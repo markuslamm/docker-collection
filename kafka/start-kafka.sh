@@ -1,7 +1,10 @@
 #!/bin/bash
 
- if [[ -z "$KAFKA_PORT" ]]; then
+if [[ -z "$KAFKA_PORT" ]]; then
     export KAFKA_PORT=9092
+fi
+if [[ -z "$JMX_PORT" ]]; then
+    export JMX_PORT=9999
 fi
 if [[ -z "$KAFKA_ADVERTISED_PORT" ]]; then
     export KAFKA_ADVERTISED_PORT=$(docker port `hostname` $KAFKA_PORT | sed -r "s/.*:(.*)/\1/g")
